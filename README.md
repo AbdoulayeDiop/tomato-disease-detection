@@ -1,4 +1,4 @@
-# YOLOv8 inference using Node.js
+# Tomato Disease Detection with YOLO
 
 This is a web interface to [YOLOv8 object detection neural network](https://ultralytics.com/yolov8)
 implemented on [Node.js](https://www.nodejs.org).
