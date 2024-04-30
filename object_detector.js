@@ -94,15 +94,17 @@ async function run_model(input) {
  * @returns Array of detected objects in a format [[x1,y1,x2,y2,object_type,probability],..]
  */
 function process_output(output, img_width, img_height) {
+    // console.log(output);
     let boxes = [];
     for (let index=0;index<8400;index++) {
-        const [class_id,prob] = [...Array(80).keys()]
+        const [class_id,prob] = [...Array(yolo_classes.length).keys()]
             .map(col => [col, output[8400*(col+4)+index]])
             .reduce((accum, item) => item[1]>accum[1] ? item : accum,[0,0]);
         if (prob < 0.5) {
             continue;
         }
         const label = yolo_classes[class_id];
+        // console.log(label, class_id);
         const xc = output[index];
         const yc = output[8400+index];
         const w = output[2*8400+index];
@@ -171,14 +173,7 @@ function intersection(box1,box2) {
  * Array of YOLOv8 class labels
  */
 const yolo_classes = [
-    'person', 'bicycle', 'car', 'motorcycle', 'airplane', 'bus', 'train', 'truck', 'boat',
-    'traffic light', 'fire hydrant', 'stop sign', 'parking meter', 'bench', 'bird', 'cat', 'dog', 'horse',
-    'sheep', 'cow', 'elephant', 'bear', 'zebra', 'giraffe', 'backpack', 'umbrella', 'handbag', 'tie', 'suitcase',
-    'frisbee', 'skis', 'snowboard', 'sports ball', 'kite', 'baseball bat', 'baseball glove', 'skateboard',
-    'surfboard', 'tennis racket', 'bottle', 'wine glass', 'cup', 'fork', 'knife', 'spoon', 'bowl', 'banana', 'apple',
-    'sandwich', 'orange', 'broccoli', 'carrot', 'hot dog', 'pizza', 'donut', 'cake', 'chair', 'couch', 'potted plant',
-    'bed', 'dining table', 'toilet', 'tv', 'laptop', 'mouse', 'remote', 'keyboard', 'cell phone', 'microwave', 'oven',
-    'toaster', 'sink', 'refrigerator', 'book', 'clock', 'vase', 'scissors', 'teddy bear', 'hair drier', 'toothbrush'
+    "Early_blight", "Healthy", "Late_blight", "Leaf Miner", "Magnesium Deficiency", "Nitrogen Deficiency", "Pottassium Deficiency", "Spotted Wilt Virus"
 ];
 
 main()
